@@ -56,7 +56,11 @@ class PPOStrategicPolicy:
         try:
             from stable_baselines3 import PPO
 
-            self._model = PPO.load(self.model_path.as_posix())
+            self._model = PPO.load(self.model_path.as_posix(),
+                                   custom_objects={
+                                        "clip_range": 0.2,
+                                        "lr_schedule": lambda _: 0.0003,
+                                    })
         except Exception:
             self._model = None
 
